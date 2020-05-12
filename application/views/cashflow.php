@@ -134,6 +134,7 @@
                     <th style="width: 40px">Cantidad</th>
                   </tr>  
                 </thead>
+                <tbody id="tb_ingresos"></tbody>
                 <tfooter>
                   <tr>
                     <td colspan="3">TOTAL INGRESO PASIVO</td>
@@ -169,34 +170,15 @@
                     <th style="width: 40px">Cantidad</th>
                   </tr>  
                 </thead>
-                <tbody>
-                  <?php  
-                  $i = 1;
-                  $subtotal = $total_gastos;
-                  foreach ($gastos as $key => $gasto):
-                    $color = (is_null($gasto->color_etiqueta)) ? 'default': $gasto->color_etiqueta;
-                  $porcentaje = ($gasto->monto / $subtotal) * 100;
-                  ?>                
-                  <tr>
-                    <td><?= $i++ ?></td>
-                    <td><?= $gasto->descripcion ?></td>
-                    <td>
-                      <div class="progress progress-xs">
-                        <div class="progress-bar progress-bar-danger" style="width: <?= $porcentaje ?>%"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-<?= $color ?>"><?= $gasto->monto ?></span></td>
-                  </tr>      
-                  <?php
-                  endforeach;
-                  ?>  
-                  <tfooter>
-                    <tr>
-                      <td colspan="3">GASTOS TOTALES</td>
-                      <td><?= $total_gastos ?></td>
-                    </tr>
-                  </tfooter>       
+                <tbody id="tb_gastos">
+                  
                 </tbody>
+                <tfooter>
+                  <tr>
+                    <td colspan="3">GASTOS TOTALES</td>
+                    <td><?= $total_gastos ?></td>
+                  </tr>
+                </tfooter>                       
               </table>                
             </div>            
             <!-- /.box-body -->                        
@@ -216,7 +198,7 @@
 
       <div class="row">
         <!-- Tabla Activos -->
-        <div class="col-md-6">
+        <div class="col-md-10 col-xs-12">
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Activos</h3>
@@ -228,17 +210,16 @@
                   <tr>
                     <th style="width: 10px">#</th>
                     <th>Descripción</th>
-                    <th>Cantidad</th>
-                    <th style="width: 50px">Costo acción</th>
+                    <th style="color: blue; ">Cantidad</th>
+                    <th style="color: blue; ">Costo acción</th>
                     <th>Depósito</th>
-                    <th>Costo</th>
+                    <th>Costo Inmueble</th>
+                    <th>Barra</th>
+                    <th style="width: 100px;">Total</th>
                   </tr>  
                 </thead>
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                  </tr>
+                <tbody id="tb_activos">
+                  
                 </tbody>
               </table>  
             </div>
@@ -253,7 +234,7 @@
         <!-- col -->
         
         <!-- Tabla Pasivos -->
-        <div class="col-md-6">
+        <div class="col-md-6 col-xs-12">
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Pasivos</h3>
@@ -269,27 +250,8 @@
                     <th style="width: 40px">Cantidad</th>
                   </tr>  
                 </thead>
-                <tbody>
-                  <?php  
-                  $i = 1;
-                  $subtotal = $total_pasivos;
-                  foreach ($pasivos as $key => $pasivo):
-                    $color = (is_null($pasivo->color_etiqueta)) ? 'default': $pasivo->color_etiqueta;
-                  $porcentaje = ($pasivo->monto / $subtotal) * 100;
-                  ?>                
-                  <tr>
-                    <td><?= $i++ ?></td>
-                    <td><?= $pasivo->descripcion ?></td>
-                    <td>
-                      <div class="progress progress-xs">
-                        <div class="progress-bar progress-bar-danger" style="width: <?= $porcentaje ?>%"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-<?= $color ?>"><?= $pasivo->monto ?></span></td>
-                  </tr>      
-                  <?php
-                  endforeach;
-                  ?>         
+                <tbody id="tb_pasivos">
+                  
                 </tbody>
                 <tfooter>
                   <tr>

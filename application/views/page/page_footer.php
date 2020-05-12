@@ -95,9 +95,14 @@
 <script src="<?= base_url() ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?= base_url() ?>dist/js/adminlte.min.js"></script>
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
+<!-- My script -->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#tb_ingresos').load("<?= base_url() ?>home/load_ingresos");
+    $('#tb_gastos').load("<?= base_url() ?>home/load_gastos");
+    $('#tb_activos').load("<?= base_url() ?>home/load_activos");
+    $('#tb_pasivos').load("<?= base_url() ?>home/load_pasivos");
+  });
+</script>
 </body>
 </html>

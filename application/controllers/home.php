@@ -4,12 +4,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 include_once (dirname(__FILE__) . "/my_controller.php"); 
 
 class Home extends MY_Controller {
+	function __construct(){
+		parent::__construct();
+		$this->load->model('ingreso_mdl');
+		$this->load->model('gasto_mdl');
+		$this->load->model('activo_mdl');
+		$this->load->model('pasivo_mdl');
+	}
+
 	public function index(){
 		$this->is_logged();
 
-		$this->load->model('pasivo_mdl');
-		$this->load->model('gasto_mdl');
-		$this->load->model('ingreso_mdl');
+		
 		$this->load->model('profesion_mdl');
 		$profesion = null;
 		if (!is_null($this->session->userdata('id_profesion')))
@@ -35,9 +41,7 @@ class Home extends MY_Controller {
 		$data = array(
 			'profesion' => $profesion,
 			'total_ingreso_pasivo' => $total_ingreso_pasivo,
-			'gastos' => $this->gasto_mdl->fetch_all($id_profesion),
 			'total_gastos' => $total_gastos,
-			'pasivos' => $this->pasivo_mdl->fetch_all($id_profesion),
 			'total_pasivos' => $total_pasivos
 			);
 		$this->load->view('page/page_header', $data_header);
@@ -85,5 +89,125 @@ class Home extends MY_Controller {
 		}
 		else
 			echo 'error, no existe una profesion con esa id';
+	}
+
+	public function load_ingresos(){
+		$output = '';
+		$id_profesion = $this->session->userdata('id_profesion');
+
+		if (!is_null($id_profesion)){
+			$total_ingresos = $this->ingreso_mdl->total_monto($id_profesion);
+			$ingresos = $this->ingreso_mdl->fetch_all($id_profesion);
+			$i = 1;
+			foreach ($ingresos as $key => $ingreso){
+		        $color = (is_null($ingreso->color_etiqueta)) ? 'default': $ingreso->color_etiqueta;
+		      	$porcentaje = ($ingreso->monto / $total_ingresos) * 100;
+				$output .= '
+				<tr>
+		            <td>'.$i++.'</td>
+		            <td>'.$ingreso->descripcion.'</td>
+		            <td>
+		              <div class="progress progress-xs">
+		                <div class="progress-bar progress-bar-danger" style="width: '.$porcentaje.'%"></div>
+		              </div>
+		            </td>
+		            <td><span class="badge bg-'.$color.'">'.$ingreso->monto.'</span></td>
+		         </tr>      
+				';
+			}
+		}
+		
+		echo $output;
+	}
+
+	public function load_gastos(){
+		$output = '';
+		$id_profesion = $this->session->userdata('id_profesion');
+
+		if (!is_null($id_profesion)){
+			$total_gastos = $this->gasto_mdl->total_monto($id_profesion);
+			$gastos = $this->gasto_mdl->fetch_all($id_profesion);
+			$i = 1;
+			foreach ($gastos as $key => $gasto){
+		        $color = (is_null($gasto->color_etiqueta)) ? 'default': $gasto->color_etiqueta;
+		      	$porcentaje = ($gasto->monto / $total_gastos) * 100;
+				$output .= '
+				<tr>
+		            <td>'.$i++.'</td>
+		            <td>'.$gasto->descripcion.'</td>
+		            <td>
+		              <div class="progress progress-xs">
+		                <div class="progress-bar progress-bar-danger" style="width: '.$porcentaje.'%"></div>
+		              </div>
+		            </td>
+		            <td><span class="badge bg-'.$color.'">'.$gasto->monto.'</span></td>
+		         </tr>      
+				';
+			}
+		}
+		
+		echo $output;
+	}
+
+	public function load_activos(){
+		$output = '';
+		$id_profesion = $this->session->userdata('id_profesion');
+
+		if (!is_null($id_profesion)){
+			$total_activos = $this->activo_mdl->total_monto($id_profesion);
+			$activos = $this->activo_mdl->fetch_all($id_profesion);
+			$i = 1;
+			foreach ($activos as $key => $activo){
+		        $color = (is_null($activo->color_etiqueta)) ? 'default': $activo->color_etiqueta;
+		      	$porcentaje = ($activo->monto / $total_activos) * 100;
+				$output .= '
+				<tr>
+		            <td>'.$i++.'</td>
+		            <td>'.$activo->descripcion.'</td>
+		            <td>'.$activo->cantidad.'</td>
+		            <td>'.$activo->precio_unitario.'</td>
+		            <td>'.$activo->deposito.'</td>
+		            <td>'.$activo->costo.'</td>
+		            <td>
+		              <div class="progress progress-xs">
+		                <div class="progress-bar progress-bar-danger" style="width: '.$porcentaje.'%"></div>
+		              </div>
+		            </td>
+		            <td><span class="badge bg-'.$color.'">'.$activo->monto.'</span></td>
+		         </tr>      
+				';
+			}
+		}
+		
+		echo $output;
+	}
+
+	public function load_pasivos(){
+		$output = '';
+		$id_profesion = $this->session->userdata('id_profesion');
+
+		if (!is_null($id_profesion)){
+			$total_pasivos = $this->pasivo_mdl->total_monto($id_profesion);
+			$pasivos = $this->pasivo_mdl->fetch_all($id_profesion);
+			$i = 1;
+			foreach ($pasivos as $key => $pasivo){
+		        $color = (is_null($pasivo->color_etiqueta)) ? 'default': $pasivo->color_etiqueta;
+		      	$porcentaje = ($pasivo->monto / $total_pasivos) * 100;
+				$output .= '
+				<tr>
+		            <td>'.$i++.'</td>
+		            <td>'.$pasivo->descripcion.'</td>
+		            <td>
+		              <div class="progress progress-xs">
+		                <div class="progress-bar progress-bar-danger" style="width: '.$porcentaje.'%"></div>
+		              </div>
+		            </td>
+		            <td><span class="badge bg-'.$color.'">'.$pasivo->monto.'</span></td>
+		         </tr>      
+				';
+			}
+		}
+		
+		echo $output;
 	}
 }
