@@ -95,6 +95,7 @@
 <script src="<?= base_url() ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?= base_url() ?>dist/js/adminlte.min.js"></script>
+
 <!-- My script -->
 <script type="text/javascript">
   $(document).ready(function(){
@@ -102,6 +103,70 @@
     $('#tb_gastos').load("<?= base_url() ?>home/load_gastos");
     $('#tb_activos').load("<?= base_url() ?>home/load_activos");
     $('#tb_pasivos').load("<?= base_url() ?>home/load_pasivos");
+
+    //Costo total acciones
+    $('#cant_acciones').keyup(function(){
+      $('#total_acciones').val(this.value * $('#costo_accion').val());
+    });
+    
+    $('#costo_accion').keyup(function(){
+      $('#total_acciones').val($('#cant_acciones').val() * this.value);
+    });
+
+    $("#modal-acciones").on('hidden.bs.modal', function() {
+      $('#modal-message').html('');
+      $('#modal-message').hide();
+      $('#modal-form')[0].reset();
+    });
+
+    //Comprar acciones
+    $('#comprar_acciones').click(function(){
+      var descripcion = $('#descripcion').val();
+      var cant_acciones = $('#cant_acciones').val();
+      var costo_accion = $('#costo_accion').val();
+      console.log($('#descripcion').val());
+      console.log(cant_acciones);
+      console.log(costo_accion);
+
+      if (descripcion == "") {
+        $('#modal-message').html('El nombre de la compañia es nulo.');
+        $('#modal-message').show();
+        console.log('Error: descripcion is null');
+        return false;
+      }
+
+      if (cant_acciones == "") {
+        $('#modal-message').html('La cantidad es nula.');
+        $('#modal-message').show();
+        console.log('Error: cant_acciones is null');
+        return false;
+      }
+
+      if (costo_accion == "") {
+        $('#modal-message').html('El costo x accion es nulo.');
+        $('#modal-message').show();
+        console.log('Error: costo_accion is null');
+        return false;
+      }
+
+      $.ajax({
+        url: "<?= base_url() ?>home/comprar_acciones",
+        method: "post",
+        data: {descripcion: descripcion, cant_acciones: cant_acciones, costo_accion: costo_accion},
+        success: function(data){
+          $('#tb_activos').load("<?= base_url() ?>home/load_activos");
+          console.log(data);
+        }      
+      });
+
+      $('#modal-acciones').modal('hide');
+      return true;
+    });
+
+    $('#comprar_acciones2').click(function(){
+      $('#modal-acciones').modal('hide');
+    });
+
   });
 </script>
 </body>

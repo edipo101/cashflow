@@ -184,7 +184,7 @@
             <!-- /.box-body -->                        
 
             <div class="box-footer">
-              <button type="button" class="btn btn-danger pull-right"><i class="fa fa-user"></i> Actualizar hijos
+              <button type="button" id="okey" class="btn btn-danger pull-right"><i class="fa fa-user"></i> Actualizar hijos
               </button>
             </div>
           </div>
@@ -225,8 +225,9 @@
             </div>
             <!-- /.box-body -->  
             <div class="box-footer">
-                <button type="button" class="btn btn-danger pull-right"><i class="fa fa-user"></i> Agregar acciones
-                </button> 
+                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="" style="margin-left: 8px;"><i class="fa fa-user"></i> Comprar bienes</button> 
+                <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#modal-acciones"><i class="fa fa-user"></i> Comprar acciones</button> 
+              </button>
             </div>          
           </div>
           <!-- /.box -->        
@@ -268,6 +269,48 @@
         <!-- col -->
       </div>
       <!-- row -->
+
+      <!-- Modal acciones -->
+      <div class="modal fade in" id="modal-acciones" style="display: none; padding-right: 17px;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Comprar acciones</h4>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-danger alert-dismissible" id="modal-message" style="display: none">
+              </div>
+              <form id="modal-form">
+                <div class="form-group">
+                  <label for="descripcion">Nombre compañia</label>
+                  <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="cant_acciones">Cantidad</label>
+                  <input type="number" class="form-control" id="cant_acciones" name="cant_acciones" placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="costo_accion">Costo x accion</label>
+                  <input type="number" class="form-control" id="costo_accion" name="costo_accion" placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="total_acciones">Costo total</label>
+                  <input type="number" class="form-control" id="total_acciones" name="total_acciones" placeholder="" disabled="">
+                </div>
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+              <button type="button" id="comprar_acciones" class="btn btn-primary">Comprar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
     </section>
     <!-- /.content -->
   </div>

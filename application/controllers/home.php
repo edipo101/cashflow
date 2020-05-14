@@ -210,4 +210,24 @@ class Home extends MY_Controller {
 		
 		echo $output;
 	}
+
+	//Comprar acciones
+	public function comprar_acciones(){
+		$descripcion = $this->input->post('descripcion');
+		$cant = $this->input->post('cant_acciones');
+		$precio = $this->input->post('costo_accion');
+		$total = $cant * $precio;
+
+		$data = array(
+			'descripcion' => $descripcion,
+			'id_tipo_activo' => 1,
+			'cantidad' => $cant,
+			'precio_unitario' => $precio,
+			'id_profesion' => $this->session->userdata('id_profesion'),
+			'monto' => $total
+		);
+		$this->activo_mdl->insert($data);
+
+		echo json_encode($data);
+	}
 }
